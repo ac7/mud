@@ -6,7 +6,7 @@ type room struct {
 	contents   []mob
 }
 
-func (r *room) describe(viewer *user) {
+func (r *room) describeTo(viewer *user) {
 	viewer.println("-=[{ "+r.name+" }]=-", green)
 	viewer.newline()
 	viewer.println(r.desc, none)

@@ -15,6 +15,7 @@ type user struct {
 
 func (u *user) name() string { return u.username }
 func (u *user) desc() string { return "[ " + u.username + " ]" }
+func (u *user) look()        { u.room.describeTo(u) }
 func (u *user) newline()     { u.println(``, none) }
 
 func (u *user) print(msg string, c color) {
@@ -31,12 +32,6 @@ func (u *user) disconnect() {
 	u.println(`... disconnecting`, red)
 	u.newline()
 	u.Close()
-}
-
-func (u *user) look(target mob) {
-	if target == nil {
-		u.room.describe(u)
-	}
 }
 
 func (u *user) moveInto(room *room) {

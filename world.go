@@ -8,7 +8,7 @@ func (w *world) AddUser(u *user) {
 	u.newline()
 	u.println(`--- welcome to the world ---`, black)
 	u.moveInto(w.startZone)
-	u.look(nil)
+	u.look()
 	u.disconnect()
 }
 
