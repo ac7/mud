@@ -49,7 +49,7 @@ func newUser(stream io.ReadWriteCloser) *user {
 	u := &user{
 		ReadWriter: bufio.NewReadWriter(bufio.NewReader(stream), bufio.NewWriter(stream)),
 		Closer:     stream,
-		_id:        newId(),
+		_id:        newID(),
 	}
 	return u
 }
