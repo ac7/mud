@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"io"
-	"net"
 )
 
 type user struct {
@@ -16,11 +15,10 @@ func (u *user) Println(msg string) {
 	u.Flush()
 }
 
-func newUser(conn net.Conn) *user {
+func newUser(stream io.ReadWriteCloser) *user {
 	u := &user{
-		ReadWriter: bufio.NewReadWriter(
-			bufio.NewReader(conn), bufio.NewWriter(conn)),
-		Closer: conn,
+		ReadWriter: bufio.NewReadWriter(bufio.NewReader(stream), bufio.NewWriter(stream)),
+		Closer:     stream,
 	}
 	return u
 }
