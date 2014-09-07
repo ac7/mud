@@ -9,6 +9,7 @@ func (w *world) AddUser(u *user) {
 	u.println(`... connected`, red)
 	u.moveInto(w.startZone)
 	u.look()
+
 	u.disconnect()
 }
 
@@ -19,7 +20,7 @@ func newWorld() *world {
 			desc:  "This is the starting zone. You can walk around here if you feel like it.",
 			exits: map[string]*room{},
 			contents: []mob{
-				&monster{"grue"},
+				&monster{"grue", newId()},
 			},
 		},
 	}

@@ -8,13 +8,15 @@ import (
 type user struct {
 	*bufio.ReadWriter // for WriteString and ReadString
 	io.Closer
+	_id id
 
-	username string
-	room     *room
+	_name string
+	room  *room
 }
 
-func (u *user) name() string { return u.username }
-func (u *user) desc() string { return "[ " + u.username + " ]" }
+func (u *user) id() id       { return u._id }
+func (u *user) name() string { return u._name }
+func (u *user) desc() string { return "[ " + u._name + " ]" }
 func (u *user) look()        { u.room.describeTo(u) }
 func (u *user) newline()     { u.println(``, none) }
 
@@ -47,6 +49,7 @@ func newUser(stream io.ReadWriteCloser) *user {
 	u := &user{
 		ReadWriter: bufio.NewReadWriter(bufio.NewReader(stream), bufio.NewWriter(stream)),
 		Closer:     stream,
+		_id:        newId(),
 	}
 	return u
 }

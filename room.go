@@ -6,13 +6,13 @@ type room struct {
 	contents   []mob
 }
 
-func (r *room) describeTo(viewer *user) {
+func (r *room) describeTo(viewer viewer) {
 	viewer.newline()
 	viewer.println("-=[{ "+r.name+" }]=-", green)
 	viewer.println(" "+r.desc, none)
 	viewer.print(" Here: ", black)
 	for _, thing := range r.contents {
-		if thing != viewer {
+		if thing.id() != viewer.id() {
 			viewer.print(thing.name()+", ", black)
 		}
 	}
