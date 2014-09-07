@@ -17,6 +17,11 @@ func (u *user) name() string { return u.username }
 func (u *user) desc() string { return "[ " + u.username + " ]" }
 func (u *user) newline()     { u.println(``, none) }
 
+func (u *user) print(msg string, c color) {
+	u.WriteString(string(c) + msg + string(resetCode))
+	u.Flush()
+}
+
 func (u *user) println(msg string, c color) {
 	u.WriteString(string(c) + msg + string(resetCode) + "\n")
 	u.Flush()
@@ -39,6 +44,7 @@ func (u *user) moveInto(room *room) {
 		// leave handler here later
 	}
 	u.room = room
+	room.contents = append(room.contents, u)
 	u.println("You move into "+u.room.name, blue)
 }
 
