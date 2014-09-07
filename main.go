@@ -11,7 +11,7 @@ import (
 
 const port = 1030
 
-func serve() {
+func serve(world *world) {
 	ln, err := net.Listen(`tcp`, `:`+strconv.Itoa(port))
 	if err != nil {
 		log.Fatal(err)
@@ -24,17 +24,16 @@ func serve() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		user := newUser(conn)
-		user.Println(`Welcome`)
-		user.Close()
+		world.AddUser(newUser(conn))
 	}
 }
 
 func main() {
+	world := newWorld()
 	shouldServe := flag.Bool("serve", false, "Act as a telnet server")
 	flag.Parse()
 	if *shouldServe {
-		serve()
+		serve(world)
 	} else {
 		// build a mock connection out of stdin and stdout
 		stream := struct {
@@ -42,9 +41,6 @@ func main() {
 			io.Writer
 			io.Closer
 		}{os.Stdin, os.Stdout, os.Stdout}
-
-		user := newUser(stream)
-		user.Println(`Welcome 2`)
-		user.Close()
+		world.AddUser(newUser(stream))
 	}
 }
